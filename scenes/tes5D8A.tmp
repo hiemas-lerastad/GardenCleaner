@@ -1,0 +1,99 @@
+[gd_scene load_steps=12 format=3 uid="uid://vy13vs5l2384"]
+
+[ext_resource type="PackedScene" uid="uid://df3rwdbsxm0in" path="res://scenes/player.tscn" id="1_8qym8"]
+[ext_resource type="Script" path="res://scripts/point_to_uv_converter.gd" id="2_8pvub"]
+[ext_resource type="Script" path="res://scripts/point_interact_cast.gd" id="2_80qbr"]
+[ext_resource type="Script" path="res://scripts/draw_viewport.gd" id="3_yyl1a"]
+[ext_resource type="Texture2D" uid="uid://b7twyoqb7e4m" path="res://assets/textures/brush_tex.png" id="4_saal4"]
+[ext_resource type="Script" path="res://scripts/calculation_viewport.gd" id="5_ex0kr"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_2bi3o"]
+albedo_color = Color(0, 0.282353, 0, 1)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_dlygg"]
+material = SubResource("StandardMaterial3D_2bi3o")
+size = Vector2(20, 20)
+
+[sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_eo0e7"]
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_md2kb"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_0fn65"]
+size = Vector3(2, 0.2, 2)
+
+[node name="Test" type="Node3D"]
+
+[node name="Floor" type="StaticBody3D" parent="."]
+collision_mask = 3
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Floor"]
+mesh = SubResource("PlaneMesh_dlygg")
+skeleton = NodePath("../..")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Floor"]
+shape = SubResource("WorldBoundaryShape3D_eo0e7")
+
+[node name="Player" parent="." instance=ExtResource("1_8qym8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
+collision_layer = 2
+
+[node name="PointInteractCast" type="RayCast3D" parent="Player" node_paths=PackedStringArray("converter", "draw_viewport", "mesh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.571003, 0.0955796)
+target_position = Vector3(0, 0, -3)
+script = ExtResource("2_80qbr")
+converter = NodePath("../../PointToUVConverter")
+draw_viewport = NodePath("../../Paint Stack/Draw Preview/DrawViewport")
+mesh = NodePath("../../Test Plane/Test Mesh")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.76665, 0.642065, 0, -0.642065, 0.76665, 0, 8.56275, 0)
+
+[node name="PointToUVConverter" type="Node" parent="."]
+script = ExtResource("2_8pvub")
+
+[node name="Paint Stack" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Draw Preview" type="SubViewportContainer" parent="Paint Stack"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="DrawViewport" type="SubViewport" parent="Paint Stack/Draw Preview"]
+handle_input_locally = false
+render_target_update_mode = 4
+script = ExtResource("3_yyl1a")
+
+[node name="ColorRect" type="ColorRect" parent="Paint Stack/Draw Preview/DrawViewport"]
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Brush" type="Sprite2D" parent="Paint Stack/Draw Preview/DrawViewport"]
+position = Vector2(-10000, 0)
+texture = ExtResource("4_saal4")
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="Paint Stack"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="CalculationViewport" type="SubViewport" parent="Paint Stack/SubViewportContainer"]
+handle_input_locally = false
+render_target_update_mode = 4
+script = ExtResource("5_ex0kr")
+
+[node name="Sprite2D" type="Sprite2D" parent="Paint Stack/SubViewportContainer/CalculationViewport"]
+
+[node name="Test Plane" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 1.73566, -2.781)
+
+[node name="Test Mesh" type="MeshInstance3D" parent="Test Plane"]
+mesh = SubResource("PlaneMesh_md2kb")
+skeleton = NodePath("../../Floor")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Test Plane"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.2, 0)
+shape = SubResource("BoxShape3D_0fn65")

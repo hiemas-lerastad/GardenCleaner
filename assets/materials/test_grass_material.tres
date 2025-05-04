@@ -1,0 +1,10 @@
+[gd_resource type="ShaderMaterial" load_steps=3 format=3 uid="uid://b4vc7bkfwy2ie"]
+
+[ext_resource type="Shader" path="res://assets/shaders/grass_shader_01.gdshader" id="1_1plil"]
+[ext_resource type="Texture2D" uid="uid://dgo4bnhgjnrkc" path="res://assets/textures/test.jpg" id="2_y0ak7"]
+
+[resource]
+render_priority = 0
+shader = ExtResource("1_1plil")
+shader_parameter/mesh_coords = Vector2(0, 0)
+shader_parameter/paint_texture = ExtResource("2_y0ak7")

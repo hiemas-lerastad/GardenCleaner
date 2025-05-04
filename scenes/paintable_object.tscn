@@ -1,0 +1,82 @@
+[gd_scene load_steps=6 format=3 uid="uid://btuwc8jcaopx1"]
+
+[ext_resource type="Script" path="res://scripts/paintable_object.gd" id="1_g6qgs"]
+[ext_resource type="Script" path="res://scripts/point_to_uv_converter.gd" id="2_ht3wr"]
+[ext_resource type="Script" path="res://scripts/draw_viewport.gd" id="2_mo1ne"]
+[ext_resource type="Script" path="res://scripts/calculation_viewport.gd" id="4_2mp4n"]
+[ext_resource type="Texture2D" uid="uid://ckpfp15br740l" path="res://assets/textures/RoundBrush.png" id="4_rkitf"]
+
+[node name="Paintable Object" type="StaticBody3D" node_paths=PackedStringArray("draw_viewport", "converter")]
+collision_layer = 4
+collision_mask = 0
+script = ExtResource("1_g6qgs")
+draw_viewport = NodePath("Paint Stack/Draw Preview/Draw Viewport")
+converter = NodePath("Point To UV Converter")
+
+[node name="Point To UV Converter" type="Node" parent="."]
+script = ExtResource("2_ht3wr")
+
+[node name="Paint Stack" type="Control" parent="."]
+visible = false
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Draw Preview" type="SubViewportContainer" parent="Paint Stack"]
+layout_mode = 0
+offset_top = 0.5
+offset_right = 512.0
+offset_bottom = 512.5
+scale = Vector2(0.5, 0.5)
+
+[node name="Draw Viewport" type="SubViewport" parent="Paint Stack/Draw Preview" node_paths=PackedStringArray("brush", "calculation_viewport", "black_backgound", "compare_texture")]
+handle_input_locally = false
+render_target_update_mode = 0
+script = ExtResource("2_mo1ne")
+brush = NodePath("Brush")
+calculation_viewport = NodePath("../../Calculation Preview/Calculation Viewport")
+black_backgound = NodePath("Black Background")
+compare_texture = NodePath("../../Test Preview/Test Viewport")
+
+[node name="Black Background" type="ColorRect" parent="Paint Stack/Draw Preview/Draw Viewport"]
+offset_right = 512.0
+offset_bottom = 512.0
+color = Color(0, 0, 0, 1)
+
+[node name="Brush" type="Sprite2D" parent="Paint Stack/Draw Preview/Draw Viewport"]
+position = Vector2(-10000, 0)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("4_rkitf")
+
+[node name="Calculation Preview" type="SubViewportContainer" parent="Paint Stack"]
+layout_mode = 0
+offset_top = 256.0
+offset_right = 128.0
+offset_bottom = 384.0
+
+[node name="Calculation Viewport" type="SubViewport" parent="Paint Stack/Calculation Preview" node_paths=PackedStringArray("sprite")]
+handle_input_locally = false
+size = Vector2i(128, 128)
+size_2d_override = Vector2i(128, 128)
+size_2d_override_stretch = true
+render_target_update_mode = 0
+script = ExtResource("4_2mp4n")
+sprite = NodePath("Draw Sprite")
+
+[node name="Draw Sprite" type="Sprite2D" parent="Paint Stack/Calculation Preview/Calculation Viewport"]
+
+[node name="Test Preview" type="SubViewportContainer" parent="Paint Stack"]
+layout_mode = 0
+offset_top = 0.5
+offset_right = 512.0
+offset_bottom = 512.5
+scale = Vector2(0.5, 0.5)
+
+[node name="Compare Texture" type="ColorRect" parent="Paint Stack/Test Preview"]
+layout_mode = 2
+color = Color(0, 0, 0, 1)
+
+[node name="Test Viewport" type="SubViewport" parent="Paint Stack/Test Preview"]
+handle_input_locally = false
+render_target_update_mode = 0
