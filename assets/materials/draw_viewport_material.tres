@@ -1,0 +1,6 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://cuaoy20roqoqi"]
+
+[ext_resource type="Shader" path="res://assets/shaders/draw_viewport_shader.gdshader" id="1_hghpp"]
+
+[resource]
+shader = ExtResource("1_hghpp")

@@ -1,0 +1,79 @@
+[gd_scene load_steps=11 format=3 uid="uid://rp8nw2n0wsjd"]
+
+[ext_resource type="PackedScene" uid="uid://df3rwdbsxm0in" path="res://scenes/player.tscn" id="1_qrl7b"]
+[ext_resource type="Script" path="res://scripts/point_interact_cast.gd" id="2_q773f"]
+[ext_resource type="PackedScene" uid="uid://btuwc8jcaopx1" path="res://scenes/paintable_object.tscn" id="3_yb440"]
+[ext_resource type="Script" path="res://scripts/paintable_mesh.gd" id="4_3nhcs"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_2bi3o"]
+albedo_color = Color(0, 0.282353, 0, 1)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_dlygg"]
+material = SubResource("StandardMaterial3D_2bi3o")
+size = Vector2(20, 20)
+
+[sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_eo0e7"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_188fs"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_ynysi"]
+radius = 1.0
+height = 2.0
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_0vqmu"]
+radius = 1.0
+
+[node name="Test" type="Node3D"]
+
+[node name="Floor" type="StaticBody3D" parent="."]
+collision_mask = 3
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Floor"]
+mesh = SubResource("PlaneMesh_dlygg")
+skeleton = NodePath("../..")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Floor"]
+visible = false
+shape = SubResource("WorldBoundaryShape3D_eo0e7")
+
+[node name="Player" parent="." node_paths=PackedStringArray("pivot") instance=ExtResource("1_qrl7b")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 4)
+collision_layer = 2
+pivot = NodePath("Pivot")
+
+[node name="Pivot" type="Node3D" parent="Player"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+
+[node name="Point Interact Cast" type="RayCast3D" parent="Player/Pivot" node_paths=PackedStringArray("collision_area")]
+target_position = Vector3(0, 0, -3)
+collision_mask = 8
+script = ExtResource("2_q773f")
+draw_size_multiplier = 2.0
+collision_area = NodePath("Area3D")
+
+[node name="Area3D" type="Area3D" parent="Player/Pivot/Point Interact Cast"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -2.28807)
+collision_layer = 4
+collision_mask = 8
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Player/Pivot/Point Interact Cast/Area3D"]
+shape = SubResource("SphereShape3D_188fs")
+
+[node name="Camera3D" type="Camera3D" parent="Player/Pivot"]
+visible = false
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.0842174, 0.996447, 0, -0.996447, 0.0842174, 0, 8.56275, 0)
+
+[node name="Object Container" type="Node3D" parent="."]
+
+[node name="Paintable Object 2" parent="Object Container" node_paths=PackedStringArray("mesh") instance=ExtResource("3_yb440")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.6241, 2.44357, -4.65707)
+mesh = NodePath("Mesh 2")
+
+[node name="Mesh 2" type="MeshInstance3D" parent="Object Container/Paintable Object 2"]
+mesh = SubResource("SphereMesh_ynysi")
+script = ExtResource("4_3nhcs")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Object Container/Paintable Object 2"]
+shape = SubResource("SphereShape3D_0vqmu")

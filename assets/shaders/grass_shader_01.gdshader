@@ -20,12 +20,11 @@ void vertex()
 	paint_uv = (local_position.xz - (size / vec2(2.0))) / size;
 	paint_value = texture(paint_texture, paint_uv);
 	paint_luminance = (0.2126 * paint_value.r + 0.7152 * paint_value.g + 0.0722 * paint_value.b);
-	
+
 	if (!initialised) {
 		paint_luminance = 0.0;
 	}
-	
-	//VERTEX.y *= 1.0 - clamp(paint_luminance, 0.0, 0.7);
+
 	height = VERTEX.y * (clamp(paint_luminance, 0.0, 0.7));
 }
 
@@ -33,11 +32,11 @@ void fragment()
 {
 	//ALBEDO = paint_value.rgb;
 	//ALBEDO = vec3(paint_luminance);
-	
+
 	//if (!initialised) {
 	if (height > 0.07) {
 		ALPHA = 0.0;
-	} 
+	}
 	ALBEDO = vec3(0.5, 1.0, 0.0);
 	//}
 }
