@@ -14,10 +14,14 @@ var viewport_size: int = 512;
 
 func _process(delta):
 	handle_paint(delta);
+	
+#func _physics_process(delta: float) -> void:
+	#handle_paint(delta);
 
 func handle_paint(delta) -> void:
 	if pressing and is_colliding():
-		object = get_collider();
+		if not object:
+			object = get_collider();
 		var uv_coords = object.converter.get_uv_coords(get_collision_point(), get_collision_normal());
 		object.draw_viewport.brush.scale = object.draw_viewport.base_brush_size * draw_size_multiplier;
 		#var faces: Array = object.converter.get_faces_to_update(get_collision_point(), get_collision_normal());
@@ -51,6 +55,7 @@ func handle_paint(delta) -> void:
 			object.draw_viewport.move_brush(uv_coords * object.viewport_size, delta * draw_strength);
 			
 			set_paint_tex(object.draw_viewport.get_texture());
-			
+	else:
+		object = null;
 func set_paint_tex(tex: Texture)  -> void:
 	object.mesh.set_paint_tex(tex);
