@@ -20,7 +20,7 @@ func _ready() -> void:
 	converter.set_mesh(mesh);
 
 	mesh.shader_material = mesh_material.duplicate();
-	print(mesh.shader_material)
-	mesh.size = Vector2(10, 10);
+
+	mesh.size = size;
 	
 	mesh.initialise();

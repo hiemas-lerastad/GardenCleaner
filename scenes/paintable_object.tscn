@@ -4,7 +4,7 @@
 [ext_resource type="Material" uid="uid://cl51iefikwbs" path="res://assets/materials/test_paintable_material.tres" id="2_4glj1"]
 [ext_resource type="Script" path="res://scripts/point_to_uv_converter.gd" id="2_ht3wr"]
 [ext_resource type="Script" path="res://scripts/draw_viewport.gd" id="2_mo1ne"]
-[ext_resource type="Material" uid="uid://cuaoy20roqoqi" path="res://assets/materials/draw_viewport_material.tres" id="4_q2rsi"]
+[ext_resource type="Material" path="res://assets/materials/draw_viewport_material.tres" id="4_q2rsi"]
 [ext_resource type="Texture2D" uid="uid://ckpfp15br740l" path="res://assets/textures/RoundBrush.png" id="4_rkitf"]
 [ext_resource type="Script" path="res://scripts/output_viewport.gd" id="6_fdlbo"]
 
@@ -31,6 +31,7 @@ offset_bottom = 40.0
 [node name="Draw Preview" type="SubViewportContainer" parent="Paint Stack"]
 visible = false
 clip_contents = true
+layout_mode = 0
 offset_top = 0.5
 offset_right = 512.0
 offset_bottom = 512.5
@@ -96,6 +97,7 @@ color = Color(0, 0, 0, 1)
 [node name="Output Viewport Container" type="SubViewportContainer" parent="Paint Stack"]
 visible = false
 clip_contents = true
+layout_mode = 0
 offset_top = 0.5
 offset_right = 512.0
 offset_bottom = 512.5

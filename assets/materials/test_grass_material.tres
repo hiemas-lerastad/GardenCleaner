@@ -1,6 +1,7 @@
-[gd_resource type="ShaderMaterial" load_steps=4 format=3 uid="uid://b4vc7bkfwy2ie"]
+[gd_resource type="ShaderMaterial" load_steps=5 format=3 uid="uid://b4vc7bkfwy2ie"]
 
 [ext_resource type="Shader" path="res://assets/shaders/grass_shader_02.gdshader" id="1_jv2aw"]
+[ext_resource type="Texture2D" uid="uid://dgo4bnhgjnrkc" path="res://assets/textures/test.jpg" id="2_y0ak7"]
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_d2xsp"]
 noise_type = 3
@@ -22,6 +23,7 @@ shader_parameter/wind_strength = 0.3
 shader_parameter/wind_noise_size = 0.05
 shader_parameter/wind_noise_speed = 0.1
 shader_parameter/mesh_coords = Vector2(0, 0)
-shader_parameter/size = Vector2(6, 6)
+shader_parameter/size = Vector2(10, 10)
 shader_parameter/initialised = false
 shader_parameter/wind_noise = SubResource("NoiseTexture2D_nv6a3")
+shader_parameter/paint_texture = ExtResource("2_y0ak7")

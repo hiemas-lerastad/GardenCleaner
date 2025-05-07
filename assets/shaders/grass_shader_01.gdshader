@@ -24,8 +24,13 @@ void vertex()
 	if (!initialised) {
 		paint_luminance = 0.0;
 	}
-
-	height = VERTEX.y * (clamp(paint_luminance, 0.0, 0.7));
+	
+	if (paint_uv.x > 0.5) {
+		height = 1.0;
+		VERTEX.y = 10.0;
+	} else {
+		height = VERTEX.y * (clamp(paint_luminance, 0.0, 0.7));	
+	}
 }
 
 void fragment()

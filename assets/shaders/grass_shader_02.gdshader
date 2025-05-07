@@ -34,6 +34,7 @@ void vertex() {
 	world_position = (MODEL_MATRIX * vec4(VERTEX, 1.0)).xyz;
 	local_position = world_position - vec3(mesh_coords.x, 0.0, mesh_coords.y);
 	paint_uv = (local_position.xz - (size / vec2(2.0))) / size;
+	paint_uv = clamp(paint_uv, -0.99, -0.01);
 	paint_value = texture(paint_texture, paint_uv);
 	paint_luminance = (0.2126 * paint_value.r + 0.7152 * paint_value.g + 0.0722 * paint_value.b);
 
@@ -42,6 +43,12 @@ void vertex() {
 	}
 
 	height = VERTEX.y * (clamp(paint_luminance, 0.0, 0.7));
+	
+	//height = 0.14;
+	
+	if (paint_uv.x > 1.0) {
+		height = 1.0;
+	}
 
 	vec3 wind_texture = texture(wind_noise, world_position.xz * wind_noise_size + normalize(-wind_direction.xz) * (TIME + UV.y / 2.5) * wind_noise_speed).rgb;
 	vec3 wind_vector = (vec4(wind_texture * normalize(wind_direction) * wind_strength, 0.0) * MODEL_MATRIX).xyz;
