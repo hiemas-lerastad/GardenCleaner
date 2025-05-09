@@ -9,6 +9,7 @@ extends RayCast3D;
 @export var collision_area: Area3D;
 @export var paint_timer: Timer;
 
+
 var pressing: bool = true;
 var viewport_size: int = 512;
 
@@ -19,8 +20,9 @@ func _process(delta):
 	#handle_paint(delta);
 
 func handle_paint(delta) -> void:
-	if pressing and is_colliding():
-		if not object:
+	#print(enabled)
+	if pressing and is_colliding() and enabled:
+		if not object or object != get_collider():
 			object = get_collider();
 		var uv_coords = object.converter.get_uv_coords(get_collision_point(), get_collision_normal());
 		object.draw_viewport.brush.scale = object.draw_viewport.base_brush_size * draw_size_multiplier;

@@ -7,16 +7,20 @@
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_5ptgn"]
 
-[sub_resource type="BoxMesh" id="BoxMesh_i7b5i"]
-size = Vector3(1.5, 0.15, 1.5)
+[sub_resource type="CylinderMesh" id="CylinderMesh_xdr2n"]
+top_radius = 0.75
+bottom_radius = 0.75
+height = 0.2
 
 [sub_resource type="CylinderMesh" id="CylinderMesh_tu0dd"]
 top_radius = 0.075
 bottom_radius = 0.075
 
-[node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("pivot")]
+[node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("pivot", "mower")]
+collision_layer = 2
 script = ExtResource("1_8v0g8")
 pivot = NodePath("Pivot")
+mower = NodePath("Mower/Mower Base")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 mesh = SubResource("CapsuleMesh_kqiuo")
@@ -41,7 +45,7 @@ draw_size_multiplier = 2.0
 
 [node name="Mower Base" type="MeshInstance3D" parent="Mower"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.756423, -2.03685)
-mesh = SubResource("BoxMesh_i7b5i")
+mesh = SubResource("CylinderMesh_xdr2n")
 skeleton = NodePath("../..")
 
 [node name="MeshInstance3D2" type="MeshInstance3D" parent="Mower"]

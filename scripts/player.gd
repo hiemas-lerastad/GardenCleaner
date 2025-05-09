@@ -1,9 +1,15 @@
+class_name Player;
 extends CharacterBody3D
 
 @export var pivot: Node3D;
+@export var mower: Node3D;
 
 const SPEED = 5.0
 const JUMP_VELOCITY = 10
+
+func _ready() -> void:
+	Globals.player = self;
+	Globals.mower = mower;
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton:

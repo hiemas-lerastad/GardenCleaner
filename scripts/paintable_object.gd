@@ -1,7 +1,9 @@
+#@tool
 class_name PaintableObject
 extends StaticBody3D;
 
 @export var mesh: PaintableMesh;
+@export var collision_mesh: CollisionShape3D;
 @export var draw_viewport: DrawViewport;
 @export var output_viewport: SubViewport;
 @export var converter: PointToUVConverter;
@@ -10,6 +12,11 @@ extends StaticBody3D;
 @export var brush_size: Vector2 = Vector2(0.5, 0.5);
 @export var threshold: int = 95;
 @export var size: Vector2 = Vector2(10.0, 10.0);
+
+#@export var make_unique: bool:
+	#set(unique_flag):
+		#make_unique = unique_flag
+
 
 var viewport_size: int = 512;
 
@@ -24,3 +31,5 @@ func _ready() -> void:
 	mesh.size = size;
 	
 	mesh.initialise();
+	
+	mesh.mesh = mesh.mesh.duplicate()
