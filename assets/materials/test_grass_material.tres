@@ -1,6 +1,6 @@
 [gd_resource type="ShaderMaterial" load_steps=5 format=3 uid="uid://b4vc7bkfwy2ie"]
 
-[ext_resource type="Shader" path="res://assets/shaders/grass_shader_02.gdshader" id="1_jv2aw"]
+[ext_resource type="Shader" path="res://assets/shaders/grass_shader.gdshader" id="1_adkok"]
 [ext_resource type="Texture2D" uid="uid://dgo4bnhgjnrkc" path="res://assets/textures/test.jpg" id="2_y0ak7"]
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_d2xsp"]
@@ -11,13 +11,13 @@ noise = SubResource("FastNoiseLite_d2xsp")
 
 [resource]
 render_priority = 0
-shader = ExtResource("1_jv2aw")
+shader = ExtResource("1_adkok")
 shader_parameter/top_color = Color(0.627451, 0.803922, 0.282353, 1)
-shader_parameter/bottom_color = Color(0, 0.653202, 0, 1)
+shader_parameter/bottom_color = Color(0, 0.654902, 0, 1)
 shader_parameter/ambient_occlusion_factor = 0.3
 shader_parameter/specular_strength = 0.4
-shader_parameter/player_displacement_strength = 0.4
-shader_parameter/player_displacement_size = 1.0
+shader_parameter/mower_displacement_strength = 0.3
+shader_parameter/mower_displacement_size = 2.0
 shader_parameter/wind_direction = Vector3(1, -0.7, -0.5)
 shader_parameter/wind_strength = 0.3
 shader_parameter/wind_noise_size = 0.05
@@ -25,5 +25,8 @@ shader_parameter/wind_noise_speed = 0.1
 shader_parameter/mesh_coords = Vector2(0, 0)
 shader_parameter/size = Vector2(10, 10)
 shader_parameter/initialised = false
+shader_parameter/mower_position = null
+shader_parameter/max_visible_distance = 100.0
+shader_parameter/player_position = null
 shader_parameter/wind_noise = SubResource("NoiseTexture2D_nv6a3")
 shader_parameter/paint_texture = ExtResource("2_y0ak7")

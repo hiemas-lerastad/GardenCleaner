@@ -1,12 +1,10 @@
-[gd_scene load_steps=9 format=3 uid="uid://btuwc8jcaopx1"]
+[gd_scene load_steps=7 format=3 uid="uid://btuwc8jcaopx1"]
 
 [ext_resource type="Script" path="res://scripts/paintable_object.gd" id="1_g6qgs"]
 [ext_resource type="Material" uid="uid://cl51iefikwbs" path="res://assets/materials/test_paintable_material.tres" id="2_4glj1"]
 [ext_resource type="Script" path="res://scripts/point_to_uv_converter.gd" id="2_ht3wr"]
 [ext_resource type="Script" path="res://scripts/draw_viewport.gd" id="2_mo1ne"]
-[ext_resource type="Material" uid="uid://cuaoy20roqoqi" path="res://assets/materials/draw_viewport_material.tres" id="4_q2rsi"]
 [ext_resource type="Texture2D" uid="uid://ckpfp15br740l" path="res://assets/textures/RoundBrush.png" id="4_rkitf"]
-[ext_resource type="Script" path="res://scripts/output_viewport.gd" id="6_fdlbo"]
 
 [sub_resource type="CanvasTexture" id="CanvasTexture_xhc7y"]
 
@@ -102,13 +100,10 @@ offset_top = 0.5
 offset_right = 512.0
 offset_bottom = 512.5
 
-[node name="Output Viewport" type="SubViewport" parent="Paint Stack/Output Viewport Container" node_paths=PackedStringArray("canvas")]
+[node name="Output Viewport" type="SubViewport" parent="Paint Stack/Output Viewport Container"]
 handle_input_locally = false
 render_target_clear_mode = 1
 render_target_update_mode = 0
-script = ExtResource("6_fdlbo")
-canvas = NodePath("ColorRect")
-canvas_material = ExtResource("4_q2rsi")
 
 [node name="TextureRect" type="TextureRect" parent="Paint Stack/Output Viewport Container/Output Viewport"]
 offset_right = 512.0

@@ -1,31 +1,39 @@
 class_name PointInteractCast;
-extends RayCast3D;
+extends ShapeCast3D;
 
-@export var object: PaintableObject
+@export var object: PaintableObject;
 
 @export var draw_strength: float = 100;
 @export var draw_size_multiplier: float = 1;
 
-@export var collision_area: Area3D;
-@export var paint_timer: Timer;
-
-
-var pressing: bool = true;
+var pressing: bool = false;
 var viewport_size: int = 512;
-
-func _process(delta):
-	handle_paint(delta);
 	
-#func _physics_process(delta: float) -> void:
-	#handle_paint(delta);
+func _physics_process(delta: float) -> void:
+	if Engine.get_physics_frames() % 3 == 0:
+		handle_paint(delta);
 
 func handle_paint(delta) -> void:
-	#print(enabled)
 	if pressing and is_colliding() and enabled:
-		if not object or object != get_collider():
-			object = get_collider();
-		var uv_coords = object.converter.get_uv_coords(get_collision_point(), get_collision_normal());
+		var index: int = Engine.get_physics_frames() % 2;
+
+		if get_collision_count() - 1 < index:
+			return;
+
+		object = get_collider(index);
+
+		var uv_coords = object.converter.get_uv_coords(get_collision_point(index), get_collision_normal(index));
 		object.draw_viewport.brush.scale = object.draw_viewport.base_brush_size * draw_size_multiplier;
+
+		if uv_coords:
+			object.draw_viewport.move_brush(uv_coords * object.viewport_size, delta * draw_strength);
+			
+			set_paint_tex(object.draw_viewport.get_texture(), object);
+
+func set_paint_tex(tex: Texture, object: PaintableObject)  -> void:
+	object.mesh.set_paint_tex(tex);
+
+
 		#var faces: Array = object.converter.get_faces_to_update(get_collision_point(), get_collision_normal());
 		# USE TO MASK FOR EACH FACE AND DRAW CIRCLE OFFSET
 
@@ -52,12 +60,11 @@ func handle_paint(delta) -> void:
 			#generate mask the shape of face
 			#blit_rect_mask(src: Image, mask: Image, src_rect: Rect2i, dst: Vector2i)
 			#maybe need to convert to images, can I use only images and not textures? pass image into shader?
-		
-		if uv_coords:
-			object.draw_viewport.move_brush(uv_coords * object.viewport_size, delta * draw_strength);
-			
-			set_paint_tex(object.draw_viewport.get_texture());
-	else:
-		object = null;
-func set_paint_tex(tex: Texture)  -> void:
-	object.mesh.set_paint_tex(tex);
+
+
+#func _on_area_entered(body_rid: RID, body: Node3D, body_shape_index: int, local_shape_index: int) -> void:
+	#objects.append(body);
+#
+#
+#func _on_area_exited(body_rid: RID, body: Node3D, body_shape_index: int, local_shape_index: int) -> void:
+	#objects.erase(body);

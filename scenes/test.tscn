@@ -81,7 +81,6 @@ shape = SubResource("WorldBoundaryShape3D_eo0e7")
 
 [node name="Player" parent="." instance=ExtResource("1_8qym8")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 4)
-collision_layer = 2
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.0842174, 0.996447, 0, -0.996447, 0.0842174, 0, 8.56275, 0)

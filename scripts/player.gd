@@ -3,6 +3,7 @@ extends CharacterBody3D
 
 @export var pivot: Node3D;
 @export var mower: Node3D;
+@export var tool: PointInteractCast;
 
 const SPEED = 5.0
 const JUMP_VELOCITY = 10
@@ -16,6 +17,9 @@ func _unhandled_input(event: InputEvent) -> void:
 		Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 	elif event.is_action_pressed("ui_cancel"):
 		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+		
+	if event.is_action_pressed("press"):
+		tool.pressing = !tool.pressing;
 
 	if Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
 		if event is InputEventMouseMotion:

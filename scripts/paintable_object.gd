@@ -32,4 +32,4 @@ func _ready() -> void:
 	
 	mesh.initialise();
 	
-	mesh.mesh = mesh.mesh.duplicate()
+	mesh.make_unique();

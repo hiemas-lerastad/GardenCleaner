@@ -1,0 +1,22 @@
+[gd_resource type="ShaderMaterial" load_steps=4 format=3 uid="uid://d1qajb8vks86a"]
+
+[ext_resource type="Shader" path="res://assets/shaders/grass_floor_shader.gdshader" id="1_kefui"]
+
+[sub_resource type="Gradient" id="Gradient_mmww1"]
+colors = PackedColorArray(0, 0, 0, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_ku1l6"]
+gradient = SubResource("Gradient_mmww1")
+
+[resource]
+render_priority = 0
+shader = ExtResource("1_kefui")
+shader_parameter/top_color = Color(0.627451, 0.803922, 0.282353, 1)
+shader_parameter/bottom_color = Color(0.486275, 0.745098, 0.211765, 1)
+shader_parameter/base_color = Color(0, 0.654902, 0, 1)
+shader_parameter/mesh_coords = null
+shader_parameter/size = Vector2(10, 10)
+shader_parameter/initialised = false
+shader_parameter/max_visible_distance = 30.0
+shader_parameter/player_position = null
+shader_parameter/paint_texture = SubResource("GradientTexture2D_ku1l6")
