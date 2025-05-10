@@ -50,4 +50,5 @@ func set_paint_tex(tex: Texture):
 
 func make_unique():
 	mesh = mesh.duplicate();
-	ground_mesh.mesh = ground_mesh.mesh.duplicate()
+	if ground_mesh:
+		ground_mesh.mesh = ground_mesh.mesh.duplicate()

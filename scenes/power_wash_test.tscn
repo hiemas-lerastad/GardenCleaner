@@ -1,0 +1,71 @@
+[gd_scene load_steps=11 format=3 uid="uid://cgwh3b5rikyy5"]
+
+[ext_resource type="PackedScene" uid="uid://df3rwdbsxm0in" path="res://scenes/player.tscn" id="1_uaq2c"]
+[ext_resource type="PackedScene" uid="uid://btuwc8jcaopx1" path="res://scenes/paintable_object.tscn" id="2_qwjrv"]
+[ext_resource type="Script" path="res://scripts/paintable_mesh.gd" id="4_xugdb"]
+[ext_resource type="Material" uid="uid://cmgxl5kq6p5py" path="res://assets/materials/drive_floor_material.tres" id="6_wqxmn"]
+[ext_resource type="ArrayMesh" uid="uid://bxlhyr02rgp72" path="res://assets/meshes/monkey.res" id="7_ruhml"]
+[ext_resource type="Shape3D" uid="uid://j682brw0oxqk" path="res://assets/meshes/monkey_collision.tres" id="8_1vw4e"]
+
+[sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_eo0e7"]
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_2yipn"]
+size = Vector2(12, 12)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_oypj6"]
+size = Vector3(12, 0.2, 12)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_6vj31"]
+material = ExtResource("6_wqxmn")
+size = Vector2(10, 10)
+
+[node name="Test" type="Node3D"]
+
+[node name="Floor" type="StaticBody3D" parent="."]
+collision_mask = 3
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Floor"]
+visible = false
+shape = SubResource("WorldBoundaryShape3D_eo0e7")
+
+[node name="Player" parent="." instance=ExtResource("1_uaq2c")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 4)
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.0842174, 0.996447, 0, -0.996447, 0.0842174, 0, 8.56275, 0)
+
+[node name="Object Container" type="Node3D" parent="."]
+
+[node name="Paintable Object3" parent="Object Container" node_paths=PackedStringArray("mesh") instance=ExtResource("2_qwjrv")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 2.44357, -4.65707)
+mesh = NodePath("Mesh 1")
+brush_size = Vector2(0.25, 0.25)
+threshold = 90
+
+[node name="Mesh 1" type="MeshInstance3D" parent="Object Container/Paintable Object3"]
+mesh = ExtResource("7_ruhml")
+script = ExtResource("4_xugdb")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Object Container/Paintable Object3"]
+shape = ExtResource("8_1vw4e")
+
+[node name="Floor Object 1" parent="Object Container" node_paths=PackedStringArray("mesh", "collision_mesh") instance=ExtResource("2_qwjrv")]
+mesh = NodePath("Paint Mesh")
+collision_mesh = NodePath("Collider")
+brush_size = Vector2(0.65, 0.65)
+threshold = 99
+size = Vector2(12, 12)
+
+[node name="Paint Mesh" type="MeshInstance3D" parent="Object Container/Floor Object 1" node_paths=PackedStringArray("multimesh", "ground_mesh")]
+visible = false
+mesh = SubResource("PlaneMesh_2yipn")
+script = ExtResource("4_xugdb")
+multimesh = NodePath("")
+ground_mesh = NodePath("../Ground Mesh")
+
+[node name="Collider" type="CollisionShape3D" parent="Object Container/Floor Object 1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.1, 0)
+shape = SubResource("BoxShape3D_oypj6")
+
+[node name="Ground Mesh" type="MeshInstance3D" parent="Object Container/Floor Object 1"]
+mesh = SubResource("PlaneMesh_6vj31")

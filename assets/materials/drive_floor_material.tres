@@ -1,0 +1,36 @@
+[gd_resource type="ShaderMaterial" load_steps=8 format=3 uid="uid://cmgxl5kq6p5py"]
+
+[ext_resource type="Shader" path="res://assets/shaders/drive_floor_shader.gdshader" id="1_3fsgw"]
+
+[sub_resource type="Gradient" id="Gradient_ak4b1"]
+colors = PackedColorArray(1, 0.458824, 1, 1, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_xee64"]
+gradient = SubResource("Gradient_ak4b1")
+width = 512
+height = 512
+
+[sub_resource type="Gradient" id="Gradient_k15ge"]
+offsets = PackedFloat32Array(0.015873, 1)
+colors = PackedColorArray(0, 0, 0.803922, 1, 0.734739, 0.534689, 3.85046e-07, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_bn6ut"]
+gradient = SubResource("Gradient_k15ge")
+width = 512
+height = 512
+
+[sub_resource type="Gradient" id="Gradient_a8g1m"]
+colors = PackedColorArray(0, 0, 0, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_dvhak"]
+gradient = SubResource("Gradient_a8g1m")
+
+[resource]
+render_priority = 0
+shader = ExtResource("1_3fsgw")
+shader_parameter/mesh_coords = null
+shader_parameter/size = null
+shader_parameter/initialised = false
+shader_parameter/clean_texture = SubResource("GradientTexture2D_xee64")
+shader_parameter/dirt_texture = SubResource("GradientTexture2D_bn6ut")
+shader_parameter/paint_texture = SubResource("GradientTexture2D_dvhak")
